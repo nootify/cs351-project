@@ -11,11 +11,11 @@ jobs:
       - checkout
       - python/load-cache
       - python/install-deps
-      - python/save-cache
       - run:
-          name: Install Python dev dependencies
+          name: Install Dev Dependencies
           command: |
             pip install -r dev-requirements.txt
+      - python/save-cache
       - run:
           name: Run tests
           command: |
