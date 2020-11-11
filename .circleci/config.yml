@@ -30,9 +30,9 @@ jobs:
           command: |
             $HOME/.local/bin/coverage run -m pytest tests/
             $HOME/.local/bin/coverage report
-            $HOME/.local/bin/coverage html
-      - store_artifacts:
-          path: htmlcov
+            $HOME/.local/bin/coverage xml
+      - store_test_results:
+          path: coverage.xml
 
 workflows:
   main:
