@@ -6,7 +6,9 @@ from server import create_app, run_app
 
 
 # Setup Flask app
-app = create_app()
+STATIC_FOLDER = "../static"
+TEMPLATE_FOLDER = "../templates"
+app = create_app(static_folder=STATIC_FOLDER, template_folder=TEMPLATE_FOLDER)
 
 
 @app.route("/")

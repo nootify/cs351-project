@@ -9,21 +9,34 @@ jobs:
     executor: python/default
     steps:
       - checkout
-      - python/load-cache
-      - python/install-deps
-      - python/save-cache
+      - restore_cache:
+          keys:
+            - prod-deps-{{ checksum "requirements.txt" }}
+            - dev-deps-{{ checksum "dev-requirements.txt" }}
       - run:
-          name: Install Python dev dependencies
+          name: Install Dependencies
           command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
             pip install -r dev-requirements.txt
+      - save_cache:
+          key: prod-deps-{{ checksum "requirements.txt" }}
+          paths:
+            - "venv"
+      - save_cache:
+          key: dev-deps-{{ checksum "dev-requirements.txt" }}
+          paths:
+            - "venv"
       - run:
           name: Run tests
           command: |
-            $HOME/.local/bin/coverage run -m pytest
-            $HOME/.local/bin/coverage report
-            $HOME/.local/bin/coverage html
-      - store_artifacts:
-          path: htmlcov
+            . venv/bin/activate
+            ~/project/venv/bin/coverage run -m pytest tests/
+            ~/project/venv/bin/coverage report
+            ~/project/venv/bin/coverage xml
+      - store_test_results:
+          path: "~/project/coverage.xml"
 
 workflows:
   main:
