@@ -18,4 +18,4 @@ def create_app(
 
 
 def run_app(app: Flask) -> None:
-    app.run(app, host=HOST, port=PORT)
+    app.run(host=HOST, port=PORT)

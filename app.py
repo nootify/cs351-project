@@ -11,7 +11,7 @@ app = create_app()
 
 @app.route("/")
 def index():
-    now = datetime.now()
+    now = datetime.now().strftime("%Y/%-m/%-d %-I:%M:%S %p")
     return render_template("index.html", time=now)
 
 
