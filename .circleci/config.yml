@@ -31,9 +31,9 @@ jobs:
           name: Run tests
           command: |
             . venv/bin/activate
-            ./venv/coverage run -m pytest tests/
-            ./venv/coverage report
-            ./venv/coverage xml
+            ~/project/venv/bin/coverage run -m pytest tests/
+            ~/project/venv/bin/coverage report
+            ~/project/venv/bin/coverage xml
       - store_test_results:
           path: "coverage.xml"
 
