@@ -9,24 +9,25 @@ jobs:
     executor: python/default
     steps:
       - checkout
-      - python/load-cache
-      - python/install-deps
-      - python/save-cache
-
       - restore_cache:
           keys:
+            - prod-deps-{{ checksum "requirements.txt" }}
             - dev-deps-{{ checksum "dev-requirements.txt" }}
       - run:
-          name: Install Dev Dependencies
+          name: Install Dependencies
           command: |
             python3 -m venv venv
             . venv/bin/activate
+            pip install -r requirements.txt
             pip install -r dev-requirements.txt
+      - save_cache:
+          key: prod-deps-{{ checksum "requirements.txt" }}
+          paths:
+            - "venv"
       - save_cache:
           key: dev-deps-{{ checksum "dev-requirements.txt" }}
           paths:
             - "venv"
-
       - run:
           name: Run tests
           command: |
