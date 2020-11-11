@@ -34,9 +34,9 @@ jobs:
             . venv/bin/activate
             ~/project/venv/bin/coverage run -m pytest tests/
             ~/project/venv/bin/coverage report
-            ~/project/venv/bin/coverage xml
-      - store_test_results:
-          path: "~/project/coverage.xml"
+            ~/project/venv/bin/coverage html
+      - store_artifacts:
+          path: htmlcov
 
 workflows:
   main:
