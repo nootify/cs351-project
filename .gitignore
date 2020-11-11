@@ -10,6 +10,7 @@ __pycache__/
 htmlcov/
 .coverage
 .coverage.*
+.pytest_cache
 
 # Environments
 *.env
