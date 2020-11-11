@@ -9,5 +9,16 @@
     <div id="root">
         Hello World! It is currently {{ time }}
     </div>
+    <form action="/bad" method="POST">
+        <label for="bad-input">Input bad things:</label>
+        <input type="text" name="bad-input" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <form action="/good" method="POST">
+        <label for="good-input">Input good things:</label>
+        <input type="text" name="good-input" required>
+        <button type="submit">Submit</button>
+    </form>
 </body>
 </html>

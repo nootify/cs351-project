@@ -1,4 +1,5 @@
 wheel
+gunicorn
 python-dotenv
 requests
 flask
