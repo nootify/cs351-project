@@ -36,7 +36,7 @@ jobs:
             ~/project/venv/bin/coverage report
             ~/project/venv/bin/coverage xml
       - store_test_results:
-          path: "coverage.xml"
+          path: "~/project/coverage.xml"
 
 workflows:
   main:
