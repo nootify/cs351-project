@@ -30,11 +30,11 @@ jobs:
       - run:
           name: Run tests
           command: |
-            $HOME/.local/bin/coverage run -m pytest tests/
-            $HOME/.local/bin/coverage report
-            $HOME/.local/bin/coverage xml
+            coverage run -m pytest tests/
+            coverage report
+            coverage xml
       - store_test_results:
-          path: coverage.xml
+          path: "coverage.xml"
 
 workflows:
   main:
