@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Run tests
           command: |
-            $HOME/.local/bin/coverage run -m pytest
+            $HOME/.local/bin/coverage run -m pytest tests/
             $HOME/.local/bin/coverage report
             $HOME/.local/bin/coverage html
       - store_artifacts:
