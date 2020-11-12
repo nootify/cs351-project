@@ -1,0 +1,14 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Noto Sans', 'Helvetica Neue', Arial, sans-serif;
+    color: #E3E3E3;
+    background-color: #181818;
+    box-sizing: inherit;
+}
+
+#time {
+    display: inline;
+}

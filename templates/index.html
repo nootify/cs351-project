@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
     <title>CS351 Demo</title>
 </head>
 <body>
     <div id="root">
-        Hello World! It is currently {{ time }}.
+        Hello World! It is currently
+        <div id="time">
+            {{ time }}.
+        </div>
     </div>
+    <br />
     <form action="/bad" method="post">
         <label for="bad-input">Bad Input:</label>
         <input type="text" name="bad-input" required>
