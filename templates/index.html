@@ -7,17 +7,23 @@
 </head>
 <body>
     <div id="root">
-        Hello World! It is currently {{ time }}
+        Hello World! It is currently {{ time }}.
     </div>
-    <form action="/bad" method="POST">
-        <label for="bad-input">Input bad things:</label>
+    <form action="/bad" method="post">
+        <label for="bad-input">Bad Input:</label>
         <input type="text" name="bad-input" required>
         <button type="submit">Submit</button>
     </form>
 
-    <form action="/good" method="POST">
-        <label for="good-input">Input good things:</label>
+    <form action="/good" method="post">
+        <label for="good-input">Good Input:</label>
         <input type="text" name="good-input" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <form action="/fixme" method="post">
+        <label for="fixme-input">Fixme:</label>
+        <input type="text" name="fixme-input" required>
         <button type="submit">Submit</button>
     </form>
 </body>

@@ -17,16 +17,31 @@ def index():
     return render_template("index.html", time=now)
 
 
-@app.route("/bad", methods=["POST"])
+@app.route("/bad", methods=["GET", "POST"])
 def vulnerable():
-    data = request.form["bad-input"]
-    return render_template("bad.html", user_input=data)
+    if request.method == "POST":
+        data = request.form.get("bad-input")
+        return render_template("bad.html", user_input=data)
+    else:
+        return "Direct access not allowed."
 
 
-@app.route("/good", methods=["POST"])
+@app.route("/good", methods=["GET", "POST"])
 def ok():
-    data = request.form["good-input"]
-    return render_template("good.html", user_input=data)
+    if request.method == "POST":
+        data = request.form.get("good-input")
+        return render_template("good.html", user_input=data)
+    else:
+        return "Direct access not allowed."
+
+
+@app.route("/fixme", methods=["GET", "POST"])
+def fixme_form():
+    if request.method == "POST":
+        data = request.form.get("fixme-input")
+        return render_template("fixme.html", user_input=data)
+    else:
+        return "Please fix me."
 
 
 if __name__ == "__main__":
