@@ -1,48 +1,47 @@
 import pytest
 
-from app import app
+
+@pytest.fixture()
+def mock_xss_input():
+    attacks = [
+        r"""<img onmouseover="alert('xxs')">""",
+        r"<script>alert('this page is vulnerable to XSS');</script>",
+    ]
+    return attacks
 
 
 @pytest.fixture()
-def client():
-    app.config["TESTING"] = True
-
-    with app.test_client() as client:
-        yield client
-
-
-@pytest.fixture()
-def mock_input():
-    return "test"
+def mock_normal_input():
+    user_input = [
+        "Hello World",
+        "0123456789",
+    ]
+    return user_input
 
 
 class TestPages:
-    def test_main_page(self, client):
-        page = client.get("/")
-        assert b"Hello World" in page.data
-
-    def test_bad_page(self, client):
-        page = client.get("/bad")
-        assert b"Direct access not allowed." in page.data
-
-    def test_good_page(self, client):
-        page = client.get("/good")
-        assert b"Direct access not allowed." in page.data
-
-    def test_fixme_page(self, client):
-        page = client.get("/fixme")
-        assert b"Please fix me." in page.data
+    @pytest.mark.parametrize("route", ["/", "/bad", "/good"])
+    def test_access_page(self, client, route):
+        page = client.get(route)
+        if route == "/":
+            assert b"CS351 Demo" in page.data
+        else:
+            assert b"Direct access not allowed." in page.data
 
 
 class TestForms:
-    def test_bad_form(self, client, mock_input):
-        page = client.post("/bad", data={"bad-input": mock_input})
-        assert mock_input.encode("ascii") in page.data
+    @pytest.mark.parametrize(
+        "route,input_form", [("/bad", "bad-input"), ("/good", "good-input")]
+    )
+    def test_form_xss_input(self, client, mock_xss_input, route, input_form):
+        for xss_input in mock_xss_input:
+            page = client.post(route, data={input_form: xss_input})
+            assert xss_input.encode("ascii") not in page.data
 
-    def test_good_form(self, client, mock_input):
-        page = client.post("/good", data={"good-input": mock_input})
-        assert mock_input.encode("ascii") in page.data
-
-    def test_fixme_form(self, client, mock_input):
-        page = client.post("/fixme", data={"fixme-input": mock_input})
-        assert mock_input.encode("ascii") in page.data
+    @pytest.mark.parametrize(
+        "route,input_form", [("/bad", "bad-input"), ("/good", "good-input")]
+    )
+    def test_form_normal_input(self, client, mock_normal_input, route, input_form):
+        for user_input in mock_normal_input:
+            page = client.post(route, data={input_form: user_input})
+            assert user_input.encode("ascii") in page.data
