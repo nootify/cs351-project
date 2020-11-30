@@ -4,7 +4,7 @@ import pytest
 @pytest.fixture()
 def mock_xss_input():
     attacks = [
-        r"""<img onmouseover="alert('xxs')">""",
+        r"""<img onmouseover="alert('this page is vulnerable to XSS')">""",
         r"<script>alert('this page is vulnerable to XSS');</script>",
     ]
     return attacks

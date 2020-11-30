@@ -18,6 +18,12 @@ def index():
     return render_template("index.html", time=now)
 
 
+@app.route("/time")
+def time():
+    now = datetime.now().strftime("%Y/%-m/%-d %-I:%M:%S %p")
+    return now
+
+
 @app.route("/bad", methods=["GET", "POST"])
 def vulnerable():
     if request.method == "POST":
@@ -34,15 +40,6 @@ def ok():
         return render_template("good.html", user_input=data)
     else:
         return "Direct access not allowed."
-
-
-@app.route("/fixme", methods=["GET", "POST"])
-def fixme_form():
-    if request.method == "POST":
-        data = request.form.get("fixme-input")
-        return render_template("fixme.html", user_input=data)
-    else:
-        return "Please fix me."
 
 
 if __name__ == "__main__":
