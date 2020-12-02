@@ -11,6 +11,8 @@ STATIC_FOLDER = "../static"
 TEMPLATE_FOLDER = "../templates"
 app = create_app(static_folder=STATIC_FOLDER, template_folder=TEMPLATE_FOLDER)
 
+what_everyone_sees = ["Direct access not allowed"]
+
 
 @app.route("/")
 def index():
@@ -28,18 +30,18 @@ def time():
 def vulnerable():
     if request.method == "POST":
         data = request.form.get("bad-input")
-        return render_template("bad.html", user_input=data)
-    else:
-        return "Direct access not allowed."
+        what_everyone_sees.clear()
+        what_everyone_sees.append(data)
+    return render_template("bad.html", user_input=what_everyone_sees[0])
 
 
 @app.route("/good", methods=["GET", "POST"])
 def ok():
     if request.method == "POST":
         data = request.form.get("good-input")
-        return render_template("good.html", user_input=data)
-    else:
-        return "Direct access not allowed."
+        what_everyone_sees.clear()
+        what_everyone_sees.append(data)
+    return render_template("good.html", user_input=what_everyone_sees[0])
 
 
 if __name__ == "__main__":

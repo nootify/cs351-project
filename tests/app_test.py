@@ -4,7 +4,7 @@ import pytest
 @pytest.fixture()
 def mock_xss_input():
     attacks = [
-        r"""<img onmouseover="alert('this page is vulnerable to XSS')">""",
+        r"""<img onerror="alert('this page is vulnerable to XSS')">""",
         r"<script>alert('this page is vulnerable to XSS');</script>",
     ]
     return attacks
@@ -23,10 +23,7 @@ class TestPages:
     @pytest.mark.parametrize("route", ["/", "/bad", "/good"])
     def test_access_page(self, client, route):
         page = client.get(route)
-        if route == "/":
-            assert b"CS351 Demo" in page.data
-        else:
-            assert b"Direct access not allowed." in page.data
+        assert b"CS351 Demo" in page.data
 
 
 class TestForms:
