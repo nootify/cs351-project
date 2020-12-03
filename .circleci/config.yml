@@ -11,8 +11,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - prod-deps-{{ checksum "requirements.txt" }}
-            - dev-deps-{{ checksum "dev-requirements.txt" }}
+            - deps-{{ checksum "requirements.txt" }}-{{ checksum "dev-requirements.txt" }}
       - run:
           name: Install Dependencies
           command: |
@@ -21,11 +20,7 @@ jobs:
             pip install -r requirements.txt
             pip install -r dev-requirements.txt
       - save_cache:
-          key: prod-deps-{{ checksum "requirements.txt" }}
-          paths:
-            - "venv"
-      - save_cache:
-          key: dev-deps-{{ checksum "dev-requirements.txt" }}
+          key: deps-{{ checksum "requirements.txt" }}-{{ checksum "dev-requirements.txt" }}
           paths:
             - "venv"
       - run:
